@@ -111,7 +111,7 @@ variables:
 trigger:
   - platform: state
     entity_id: 
-      - "{{ states[battery_state].state }}"
+      - "sensor.{{ battery_state }}"
 
 condition: []
 action:
