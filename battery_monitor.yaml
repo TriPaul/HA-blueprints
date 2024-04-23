@@ -111,7 +111,7 @@ variables:
 trigger:
   - platform: state
     entity_id: 
-      - "sensor.{{ battery_state }}"
+      - sensor.samsung_s22_battery_state
 
 condition: []
 action:
