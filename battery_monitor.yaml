@@ -32,7 +32,7 @@ blueprint:
       selector:
         text:
       default: phone_battery
-    battery:
+    battery_level:
       name: Phone or device
       description: A phone connected via the mobile app
       selector:
@@ -41,6 +41,14 @@ blueprint:
           filter:
             - integration: mobile_app
               device_class: battery
+    battery_status:
+      name: Phone or device
+      description: A phone connected via the mobile app
+      selector:
+        entity:
+          multiple: false
+          filter:
+            - integration: mobile_app
         # multiple: false
     message_text:
       name: Text to Display
@@ -84,7 +92,8 @@ variables:
     {{ ns.devices }}
 
   app: !input app_name
-  battery_sensor: !input battery
+  battery_sensor: !input battery_level
+  battery_state: !input battery_status
   base_icon: "{{states[battery_sensor] }}"
   message_text: !input message_text
   push_icon: !input push_icon
@@ -100,8 +109,9 @@ variables:
         "progress":"{{states[battery_sensor].state}}","pushIcon":1}
 
 trigger:
-  - platform: time_pattern
-    minutes: /1
+  - platform: state
+    entity_id: 
+      - "{{states[battery_state] }}"
 
 condition: []
 action:
