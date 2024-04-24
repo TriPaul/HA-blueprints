@@ -65,9 +65,21 @@ variables:
   appname: !input appname
   my_sensor: !input my_sensor
   message_duration: !input message_duration
-  team_colors_0: "#000000"
+  team_colors_0: >-
+    {% set raw_team_colors_0 = state_attr(my_sensor, 'team_colors')[0] %}
+    {% if raw_team_colors_0 == "#ffffff" %}
+      {{ "#000000" }}
+    {% else %}
+      {{ raw_team_colors_0 }}
+    {% endif %}
   team_colors_1: "{{ state_attr(my_sensor, 'team_colors')[1] }}"
-  opponent_colors_0: "{{ state_attr(my_sensor, 'opponent_colors')[0] }}"
+  opponent_colors_0: >-
+    {% set raw_opponent_colors_0 = state_attr(my_sensor, 'opponent_colors')[0] %}
+    {% if raw_opponent_colors_0 == "#ffffff" %}
+      {{ "#000000" }}
+    {% else %}
+      {{ raw_opponent_colors_0 }}
+    {% endif %}
   opponent_colors_1: "{{ state_attr(my_sensor, 'opponent_colors')[1] }}"
   team_score: >-
     {% set raw_team_score = state_attr(my_sensor, 'team_score') %}
