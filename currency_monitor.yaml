@@ -101,7 +101,7 @@ action:
       topic: "{{ message_topic }}"
       payload: |-
         {   
-          "text": "{{ states(sensor_currency).symbol }} {{ states(sensor_currency) }}",
+          "text": "{{ states(sensor_currency.symbol) }} {{ states(sensor_currency) }}",
           "color": {{ txt_color }},
           "icon": "{{ icon }}",
           "pushIcon": {{ push_icon }},
