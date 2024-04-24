@@ -73,6 +73,13 @@ variables:
       {{ raw_team_colors_0 }}
     {% endif %}
   team_colors_1: "{{ state_attr(my_sensor, 'team_colors')[1] }}"
+  team_colors_2: >-
+    {% set raw_team_colors_2 = state_attr(my_sensor, 'team_colors')[1] %}
+    {% if raw_team_colors_0 == "#ffffff" %}
+      {{ raw_team_colors_0 }}
+    {% else %}
+      {{ raw_team_colors_2 }}
+    {% endif %}
   opponent_colors_0: >-
     {% set raw_opponent_colors_0 = state_attr(my_sensor, 'opponent_colors')[0] %}
     {% if raw_opponent_colors_0 == "#ffffff" %}
@@ -81,6 +88,13 @@ variables:
       {{ raw_opponent_colors_0 }}
     {% endif %}
   opponent_colors_1: "{{ state_attr(my_sensor, 'opponent_colors')[1] }}"
+  opponent_colors_2: >-
+    {% set raw_opponent_colors_2 = state_attr(my_sensor, 'opponent_colors')[1] %}
+    {% if raw_opponent_colors_0 == "#ffffff" %}
+      {{ raw_opponent_colors_0 }}
+    {% else %}
+      {{ raw_opponent_colors_2 }}
+    {% endif %}
   team_score: >-
     {% set raw_team_score = state_attr(my_sensor, 'team_score') %}
     {% if raw_team_score|int < 10 %}
@@ -111,9 +125,9 @@ variables:
         {"df":[0,0,16,8,"{{ team_colors_0 }}"]},     
         {"df":[16,0,16,8,"{{ opponent_colors_0 }}"]}, 
         {"dl":[1,0,1,7,"{{ team_colors_1 }}"]},
-        {"dl":[3,0,3,7,"{{ team_colors_1 }}"]},
+        {"dl":[3,0,3,7,"{{ team_colors_2 }}"]},
         {"dl":[28,0,28,7,"{{ opponent_colors_1 }}"]}, 
-        {"dl":[30,0,30,7,"{{ opponent_colors_1 }}"]}, 
+        {"dl":[30,0,30,7,"{{ opponent_colors_2 }}"]}, 
         {{ first_quarter }}
         {"dt":[7, 1, "{{ team_score }}",[255,255,255]]}, 
         {"dt":[18, 1, "{{ opponent_score }}",[255,255,255]]}, 
@@ -127,9 +141,9 @@ variables:
         {"df":[0,0,16,8,"{{ team_colors_0 }}"]},     
         {"df":[16,0,16,8,"{{ opponent_colors_0 }}"]}, 
         {"dl":[1,0,1,7,"{{ team_colors_1 }}"]},
-        {"dl":[3,0,3,7,"{{ team_colors_1 }}"]},
+        {"dl":[3,0,3,7,"{{ team_colors_2 }}"]},
         {"dl":[28,0,28,7,"{{ opponent_colors_1 }}"]}, 
-        {"dl":[30,0,30,7,"{{ opponent_colors_1 }}"]}, 
+        {"dl":[30,0,30,7,"{{ opponent_colors_2 }}"]}, 
         {{ second_quarter }}
         {"dt":[7, 1, "{{ team_score }}",[255,255,255]]}, 
         {"dt":[18, 1, "{{ opponent_score }}",[255,255,255]]}, 
