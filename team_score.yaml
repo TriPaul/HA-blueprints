@@ -152,9 +152,6 @@ trigger:
       - !input my_sensor
     attribute: quarter
     id: Quarter Change
-  - platform: time_pattern
-    minutes: /1
-    id: time
 
 condition: []
 action:
@@ -271,38 +268,7 @@ action:
                     retain: false
                     topic: "{{ repeat.item }}/custom/{{ appname }}"
                     payload: "{{ payload_second_quarter }}"
-            - conditions:
-                - condition: trigger
-                  id:
-                    - time
-                - condition: numeric_state
-                  entity_id: !input my_sensor
-                  attribute: quarter
-                  above: 0
-                  below: 2
-              sequence:
-                - service: mqtt.publish
-                  data:
-                    qos: 0
-                    retain: false
-                    topic: "{{ repeat.item }}/custom/{{ appname }}"
-                    payload: "{{ payload_first_quarter }}"
-            - conditions:
-                - condition: trigger
-                  id:
-                    - time
-                - condition: numeric_state
-                  entity_id: !input my_sensor
-                  attribute: quarter
-                  above: 1
-                  below: 3
-              sequence:
-                - service: mqtt.publish
-                  data:
-                    qos: 0
-                    retain: false
-                    topic: "{{ repeat.item }}/custom/{{ appname }}"
-                    payload: "{{ payload_second_quarter }}"
+                    
   - repeat:
       for_each: "{{ devices }}"
       sequence:
