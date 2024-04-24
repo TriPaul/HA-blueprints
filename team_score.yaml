@@ -125,6 +125,38 @@ variables:
       ], 
       "duration": {{ message_duration }} 
     }
+  payload_end: >-
+    {% if team_score|int < opponent_score|int %}
+      {
+        "text": "Match termine !",
+        "color": [255, 255, 255],
+        "icon": "31066",
+        "pushIcon": 0,
+       "progress": "100",
+        "progressC": [255, 0, 0],
+        "duration": 10
+      }
+    {% elif team_score|int == opponent_score|int %}
+      {
+        "text": "Match termine !",
+        "color": [255, 255, 255],
+        "icon": "60052",
+        "pushIcon": 0,
+        "progress": "100",
+        "progressC": [255, 128, 0],
+        "duration": 10
+      }
+    {% elif team_score|int > opponent_score|int %}
+      {
+        "text": "Match termine !",
+        "color": [255, 255, 255],
+        "icon": "84",
+        "pushIcon": 0,
+        "progress": "100",
+        "progressC": [0, 255, 0],
+        "duration": 10
+      }
+    {% endif %}
 
 trigger:
   - platform: state
@@ -132,11 +164,6 @@ trigger:
       - !input my_sensor
     to: IN
     id: Game Start
-  - platform: state
-    entity_id:
-      - !input my_sensor
-    to: POST
-    id: Game End
   - platform: state
     entity_id:
       - !input my_sensor
@@ -152,6 +179,9 @@ trigger:
       - !input my_sensor
     attribute: quarter
     id: Quarter Change
+  - platform: time_pattern
+    minutes: /1
+    id: Game End
 
 condition: []
 action:
@@ -283,4 +313,10 @@ action:
                     qos: 0
                     retain: false
                     topic: "{{ repeat.item }}/custom/{{ appname }}"
+                - service: mqtt.publish
+                  data:
+                    qos: 0
+                    retain: false
+                    topic: "{{ repeat.item }}/notification"
+                    payload: "{{ payload_end }}"
 mode: restart
