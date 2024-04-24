@@ -130,7 +130,7 @@ variables:
       {
         "text": "Match termine !",
         "color": [255, 255, 255],
-        "icon": "31066",
+        "icon": "30971",
         "pushIcon": 0,
        "progress": "100",
         "progressC": [255, 0, 0],
@@ -140,7 +140,7 @@ variables:
       {
         "text": "Match termine !",
         "color": [255, 255, 255],
-        "icon": "60052",
+        "icon": "60056",
         "pushIcon": 0,
         "progress": "100",
         "progressC": [255, 128, 0],
@@ -167,6 +167,11 @@ trigger:
   - platform: state
     entity_id:
       - !input my_sensor
+    to: POST
+    id: Game End
+  - platform: state
+    entity_id:
+      - !input my_sensor
     attribute: team_score
     id: Team Score Change
   - platform: state
@@ -179,9 +184,6 @@ trigger:
       - !input my_sensor
     attribute: quarter
     id: Quarter Change
-  - platform: time_pattern
-    minutes: /1
-    id: Game End
 
 condition: []
 action:
