@@ -152,6 +152,9 @@ trigger:
       - !input my_sensor
     attribute: quarter
     id: Quarter Change
+  - platform: time_pattern
+    minutes: /1
+    id: time
 
 condition: []
 action:
