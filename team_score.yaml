@@ -317,6 +317,6 @@ action:
                   data:
                     qos: 0
                     retain: false
-                    topic: "{{ repeat.item }}/notification"
+                    topic: "{{ repeat.item }}/notify"
                     payload: "{{ payload_end }}"
 mode: restart
