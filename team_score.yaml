@@ -109,6 +109,23 @@ variables:
       ], 
       "duration": {{ message_duration }} 
     }
+  payload_half_time: >-
+    {
+      "draw":[ 
+        {"df":[0,0,16,8,"#000000"]},     
+        {"df":[16,0,16,8,"#000000"]}, 
+        {"dl":[1,0,1,7,"{{ team_colors_0 }}"]},
+        {"dl":[3,0,3,7,"{{ team_colors_1 }}"]},
+        {"dl":[28,0,28,7,"{{ opponent_colors_0 }}"]}, 
+        {"dl":[30,0,30,7,"{{ opponent_colors_1 }}"]}, 
+        {"dp":[14,7,"#ed7f10"]},
+        {"dp":[17,7,"#ed7f10"]},
+        {"dt":[7, 1, "{{ team_score }}",[255,255,255]]}, 
+        {"dt":[18, 1, "{{ opponent_score }}",[255,255,255]]}, 
+        {"dl":[15,3,16,3,"#ffffff"]} 
+      ], 
+      "duration": {{ message_duration }} 
+    }
   payload_second_quarter: >-
     {
       "draw":[ 
@@ -184,6 +201,12 @@ trigger:
       - !input my_sensor
     attribute: quarter
     id: Quarter Change
+  - platform: state
+    entity_id:
+      - !input my_sensor
+    attribute: Clock
+    to: HT
+    id: Half time
 
 condition: []
 action:
@@ -208,6 +231,17 @@ action:
                     retain: false
                     topic: "{{ repeat.item }}/switch"
                     payload: "{{ payload_switch }}"
+            - conditions:
+                - condition: trigger
+                  id:
+                    - Half time
+              sequence:
+                - service: mqtt.publish
+                  data:
+                    qos: 0
+                    retain: false
+                    topic: "{{ repeat.item }}/custom/{{ appname }}"
+                    payload: "{{ payload_half_time }}"
             - conditions:
                 - condition: trigger
                   id:
