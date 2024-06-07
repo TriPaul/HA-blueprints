@@ -83,7 +83,7 @@ variables:
       {% set ns.devices = ns.devices + [ device ~ '/custom/' ~ app_topic] %}
     {%- endfor %}
     {{ ns.devices | reject('match','unavailable') | list}}
-	
+
   #---------------------------------
   # Moon Stuff
   #---------------------------------
